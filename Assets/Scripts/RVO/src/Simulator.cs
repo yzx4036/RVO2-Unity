@@ -118,6 +118,18 @@ namespace RVO
         private int workerAgentCount_;
         private float globalTime_;
 
+        private bool _isIdle;
+        public bool IsIdle
+        {
+            get { return _isIdle;}
+            set {
+                if (value)
+                {
+                    
+                }
+            }
+        }
+
         public static Simulator Instance
         {
             get
@@ -909,6 +921,11 @@ namespace RVO
         public void setGlobalTime(float globalTime)
         {
             globalTime_ = globalTime;
+        }
+
+        public void setIsIdle(bool pIsIdle)
+        {
+            
         }
 
         /**

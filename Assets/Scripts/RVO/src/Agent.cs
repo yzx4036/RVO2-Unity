@@ -32,6 +32,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RVO
 {
@@ -495,6 +496,11 @@ namespace RVO
         internal void update()
         {
             velocity_ = newVelocity_;
+            if (id_ == 0)
+            {
+                Debug.Log($">>>>>>>>>>>>velocity_ {velocity_}");
+            }
+            
             position_ += velocity_ * Simulator.Instance.timeStep_;
         }
 

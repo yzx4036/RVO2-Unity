@@ -10,8 +10,11 @@ public class GameAgent : MonoBehaviour
 {
     [HideInInspector] public int sid = -1;
 
+    public bool isArrived = false;
+
     /** Random number generator. */
     private Random m_random = new Random();
+
     // Use this for initialization
     void Start()
     {
@@ -20,6 +23,7 @@ public class GameAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (sid >= 0)
         {
             Vector2 pos = Simulator.Instance.getAgentPosition(sid);
@@ -28,6 +32,20 @@ public class GameAgent : MonoBehaviour
             if (Math.Abs(vel.x()) > 0.01f && Math.Abs(vel.y()) > 0.01f)
                 transform.forward = new Vector3(vel.x(), 0, vel.y()).normalized;
         }
+
+        if (isArrived)
+        {
+            //到达目的地，静止状态 
+            Simulator.Instance.setAgentPrefVelocity(sid, new Vector2(0, 0));
+            if (sid == 0)
+            {
+                Debug.Log($" speed: {Simulator.Instance.getAgentVelocity(sid)}");
+            }
+            Simulator.Instance.setAgentVelocity(sid, new Vector2(0, 0)); //设置速度为0，完全静止状态
+
+            return;
+        }
+
 
         if (!Input.GetMouseButton(1))
         {
@@ -42,11 +60,11 @@ public class GameAgent : MonoBehaviour
         }
 
         Simulator.Instance.setAgentPrefVelocity(sid, goalVector);
-
+        
         /* Perturb a little to avoid deadlocks due to perfect symmetry. */
         float angle = (float) m_random.NextDouble()*2.0f*(float) Math.PI;
         float dist = (float) m_random.NextDouble()*0.0001f;
-
+        
         Simulator.Instance.setAgentPrefVelocity(sid, Simulator.Instance.getAgentPrefVelocity(sid) +
                                                      dist*
                                                      new Vector2((float) Math.Cos(angle), (float) Math.Sin(angle)));
