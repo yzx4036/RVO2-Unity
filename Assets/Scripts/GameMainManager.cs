@@ -69,9 +69,9 @@ public class GameMainManager : SingletonBehaviour<GameMainManager>
     // Update is called once per frame
     private void Update()
     {
-        UpdateMousePosition();
         if (Input.GetMouseButtonUp(0))
         {
+            UpdateMousePosition();
             if (Input.GetKey(KeyCode.Delete))
             {
                 DeleteAgent();
@@ -80,6 +80,11 @@ public class GameMainManager : SingletonBehaviour<GameMainManager>
             {
                 CreatAgent();
             }
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            UpdateMousePosition();
         }
 
         Simulator.Instance.doStep();

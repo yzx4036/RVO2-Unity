@@ -42,16 +42,23 @@ public class GameAgent : MonoBehaviour
                 Debug.Log($" speed: {Simulator.Instance.getAgentVelocity(sid)}");
             }
             Simulator.Instance.setAgentVelocity(sid, new Vector2(0, 0)); //设置速度为0，完全静止状态
+            Simulator.Instance.setAgentRadius(sid, 10.0f);
+            Simulator.Instance.setAgentMaxSpeed(sid, 0f);
 
             return;
         }
-
-
-        if (!Input.GetMouseButton(1))
+        else
         {
-            Simulator.Instance.setAgentPrefVelocity(sid, new Vector2(0, 0));
-            return;
+            Simulator.Instance.setAgentRadius(sid, 2.0f);
+            Simulator.Instance.setAgentMaxSpeed(sid, 2.0f);
         }
+
+
+        // if (!Input.GetMouseButton(1))
+        // {
+        //     Simulator.Instance.setAgentPrefVelocity(sid, new Vector2(0, 0));
+        //     return;
+        // }
 
         Vector2 goalVector = GameMainManager.Instance.mousePosition - Simulator.Instance.getAgentPosition(sid);
         if (RVOMath.absSq(goalVector) > 1.0f)
